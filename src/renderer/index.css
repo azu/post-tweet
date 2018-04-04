@@ -1,0 +1,50 @@
+html,
+body {
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+.Editor,
+.ReactCodeMirror,
+.CodeMirror {
+    background-color: transparent !important;
+    color: white !important;
+}
+
+.Editor .ReactCodeMirror {
+    background-color: #ffffff;
+    border-color: #d9d9d9 #cccccc #b3b3b3;
+    border-radius: 4px;
+    box-sizing: border-box;
+    color: #333333;
+    cursor: default;
+    outline: none;
+}
+
+.Editor .CodeMirror,
+.Editor .CodeMirror-scroll {
+    min-height: 5em;
+}
+
+.Editor .CodeMirror {
+    height: auto;
+    font-family: Monaco, "Andale Mono", "Lucida Console", "Bitstream Vera Sans Mono", "Courier New", Courier, monospace;
+}
+
+.CodeMirror-cursor {
+    border-left: 1px solid white;
+}
+
+.CodeMirror textarea {
+    margin-bottom: -1em;
+}
+
+.CodeMirror {
+    border: 1px solid #eee;
+    height: auto;
+    max-height: 3em;
+}
+
+.CodeMirror-scroll {
+    height: auto;
+    max-height: 3em;
+}
