@@ -7,6 +7,7 @@ import AppContext from "./AppContext";
 import serviceManger from "./service-instance";
 import Editor from "./component/Editor";
 import TweetLengthCounter from "./component/TweetLengthCounter";
+import ServiceActionConst from "./Action/ServiceActionConst";
 
 const appContext = new AppContext();
 
@@ -107,6 +108,8 @@ class App extends React.Component {
 }
 
 appContext.on("dispatch", ({ eventKey }) => {
-    ipcRenderer.send(String(eventKey));
+    if (eventKey === ServiceActionConst.postLink) {
+        ipcRenderer.send("hide-window");
+    }
 });
 render(<App />, document.getElementById("app"));

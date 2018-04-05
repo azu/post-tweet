@@ -1,5 +1,5 @@
 "use strict";
-import { app, BrowserWindow, screen, shell, Menu } from "electron";
+import { app, BrowserWindow, screen, shell, Menu, ipcMain } from "electron";
 
 import Positioner from "electron-positioner";
 import * as path from "path";
@@ -135,4 +135,10 @@ app.on("ready", () => {
     });
     const menu = defaultMenu(app, shell);
     Menu.setApplicationMenu(Menu.buildFromTemplate(menu));
+});
+
+ipcMain.on("hide-window", () => {
+    if (mainWindow) {
+        mainWindow.hide();
+    }
 });
