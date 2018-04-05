@@ -3,7 +3,7 @@ import { app, BrowserWindow, screen, shell, Menu } from "electron";
 
 import Positioner from "electron-positioner";
 import * as path from "path";
-import { format as formatUrl } from "url";
+import { format as formatUrl, parse } from "url";
 import { WebMessenger } from "./WebMessenger";
 
 const defaultMenu = require("electron-default-menu");
@@ -11,8 +11,33 @@ const isDevelopment = process.env.NODE_ENV !== "production";
 
 // global reference to mainWindow (necessary to prevent window from being garbage collected)
 let mainWindow;
+/**
+ * @type {WebMessenger}
+ */
 let webMessenger;
+let startupUrl;
+
+function queryToArgs(urlString) {
+    if (!urlString) {
+        return;
+    }
+    const { query } = parse(urlString, true);
+    return {
+        title: query.title,
+        url: query.url,
+        quote: query.quote
+    };
+}
+
 app.setAsDefaultProtocolClient("post-tweet");
+
+function updateFromProtocol(webMessenger, urlString) {
+    const argvParsed = queryToArgs(urlString);
+    webMessenger.updateTitle(argvParsed.title);
+    webMessenger.updateURL(argvParsed.url);
+    webMessenger.updateQuote(argvParsed.quote);
+}
+
 // Force Single Instance Application
 const shouldQuit = app.makeSingleInstance((argv, workingDirectory) => {
     if (mainWindow) {
@@ -80,18 +105,24 @@ app.on("activate", () => {
     }
 });
 
+app.on("open-url", function(event, url) {
+    event.preventDefault();
+    if (!app.isReady()) {
+        startupUrl = url;
+    } else {
+        updateFromProtocol(webMessenger, url);
+    }
+});
+
 // create main BrowserWindow when electron is ready
 app.on("ready", () => {
     mainWindow = createMainWindow();
     webMessenger = new WebMessenger(mainWindow.webContents);
-
+    if (startupUrl) {
+        updateFromProtocol(webMessenger, startupUrl);
+    }
     const menu = defaultMenu(app, shell);
     Menu.setApplicationMenu(Menu.buildFromTemplate(menu));
-});
-
-app.on("open-url", function(event, url) {
-    event.preventDefault();
-    logEverywhere("open-url event: " + url, event);
 });
 
 function logEverywhere(...args) {
