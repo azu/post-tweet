@@ -38,6 +38,17 @@ function updateFromProtocol(webMessenger, urlString) {
     webMessenger.updateQuote(argvParsed.quote);
 }
 
+function renderWindow(defaultUrl) {
+    mainWindow = createMainWindow();
+    webMessenger = new WebMessenger(mainWindow.webContents);
+    mainWindow.webContents.once("did-finish-load", () => {
+        if (defaultUrl) {
+            updateFromProtocol(webMessenger, defaultUrl);
+        }
+    });
+    return mainWindow;
+}
+
 // Force Single Instance Application
 const shouldQuit = app.makeSingleInstance((argv, workingDirectory) => {
     if (mainWindow) {
@@ -103,8 +114,7 @@ app.on("activate", () => {
     }
     // on macOS it is common to re-create a window even after all windows have been closed
     if (mainWindow === null) {
-        mainWindow = createMainWindow();
-        webMessenger = new WebMessenger(mainWindow.webContents);
+        renderWindow();
         return;
     }
     mainWindow.show();
@@ -116,13 +126,7 @@ app.on("open-url", function(event, url) {
         startupUrl = url;
     } else {
         if (mainWindow === null) {
-            mainWindow = createMainWindow();
-            webMessenger = new WebMessenger(mainWindow.webContents);
-            mainWindow.webContents.on("did-finish-load", () => {
-                if (startupUrl) {
-                    updateFromProtocol(webMessenger, startupUrl);
-                }
-            });
+            renderWindow(url);
         } else {
             updateFromProtocol(webMessenger, url);
         }
@@ -131,13 +135,7 @@ app.on("open-url", function(event, url) {
 
 // create main BrowserWindow when electron is ready
 app.on("ready", () => {
-    mainWindow = createMainWindow();
-    webMessenger = new WebMessenger(mainWindow.webContents);
-    mainWindow.webContents.on("did-finish-load", () => {
-        if (startupUrl) {
-            updateFromProtocol(webMessenger, startupUrl);
-        }
-    });
+    renderWindow(startupUrl);
     const menu = defaultMenu(app, shell);
     Menu.setApplicationMenu(Menu.buildFromTemplate(menu));
 });
