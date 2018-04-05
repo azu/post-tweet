@@ -98,11 +98,16 @@ app.on("window-all-closed", () => {
 });
 
 app.on("activate", () => {
+    if (!app.isReady()) {
+        return;
+    }
     // on macOS it is common to re-create a window even after all windows have been closed
     if (mainWindow === null) {
         mainWindow = createMainWindow();
         webMessenger = new WebMessenger(mainWindow.webContents);
+        return;
     }
+    mainWindow.show();
 });
 
 app.on("open-url", function(event, url) {
