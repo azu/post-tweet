@@ -1,7 +1,16 @@
 {
-  "name": "electron-webpack-quick-start",
+  "name": "post-tweet",
   "version": "0.0.0",
   "license": "MIT",
+  "build": {
+    "appId": "info.efcl.post-tweet",
+    "mac": {
+      "target": [
+        "zip"
+      ],
+      "category": "your.app.category.type"
+    }
+  },
   "scripts": {
     "dev": "electron-webpack dev",
     "compile": "electron-webpack",

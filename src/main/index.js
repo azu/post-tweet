@@ -110,7 +110,17 @@ app.on("open-url", function(event, url) {
     if (!app.isReady()) {
         startupUrl = url;
     } else {
-        updateFromProtocol(webMessenger, url);
+        if (mainWindow === null) {
+            mainWindow = createMainWindow();
+            webMessenger = new WebMessenger(mainWindow.webContents);
+            mainWindow.webContents.on("did-finish-load", () => {
+                if (startupUrl) {
+                    updateFromProtocol(webMessenger, startupUrl);
+                }
+            });
+        } else {
+            updateFromProtocol(webMessenger, url);
+        }
     }
 });
 
@@ -118,15 +128,11 @@ app.on("open-url", function(event, url) {
 app.on("ready", () => {
     mainWindow = createMainWindow();
     webMessenger = new WebMessenger(mainWindow.webContents);
-    if (startupUrl) {
-        updateFromProtocol(webMessenger, startupUrl);
-    }
+    mainWindow.webContents.on("did-finish-load", () => {
+        if (startupUrl) {
+            updateFromProtocol(webMessenger, startupUrl);
+        }
+    });
     const menu = defaultMenu(app, shell);
     Menu.setApplicationMenu(Menu.buildFromTemplate(menu));
 });
-
-function logEverywhere(...args) {
-    if (mainWindow && mainWindow.webContents) {
-        mainWindow.webContents.executeJavaScript(`console.log("${args}")`);
-    }
-}
