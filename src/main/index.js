@@ -39,6 +39,18 @@ function updateFromProtocol(webMessenger, urlString) {
 }
 
 function renderWindow(defaultUrl) {
+    // Force Single Instance Application
+    const shouldQuit = app.makeSingleInstance((argv, workingDirectory) => {
+        if (mainWindow) {
+            if (mainWindow.isMinimized()) {
+                mainWindow.restore();
+            }
+            mainWindow.focus();
+        }
+    });
+    if (shouldQuit) {
+        app.quit();
+    }
     mainWindow = createMainWindow();
     webMessenger = new WebMessenger(mainWindow.webContents);
     mainWindow.webContents.once("did-finish-load", () => {
@@ -47,19 +59,6 @@ function renderWindow(defaultUrl) {
         }
     });
     return mainWindow;
-}
-
-// Force Single Instance Application
-const shouldQuit = app.makeSingleInstance((argv, workingDirectory) => {
-    if (mainWindow) {
-        if (mainWindow.isMinimized()) {
-            mainWindow.restore();
-        }
-        mainWindow.focus();
-    }
-});
-if (shouldQuit) {
-    app.quit();
 }
 
 function createMainWindow() {
@@ -129,6 +128,7 @@ app.on("open-url", function(event, url) {
             renderWindow(url);
         } else {
             updateFromProtocol(webMessenger, url);
+            mainWindow.show();
         }
     }
 });
