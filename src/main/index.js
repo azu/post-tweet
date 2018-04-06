@@ -33,9 +33,11 @@ app.setAsDefaultProtocolClient("post-tweet");
 
 function updateFromProtocol(webMessenger, urlString) {
     const argvParsed = queryToArgs(urlString);
+    webMessenger.beforeUpdate(argvParsed);
     webMessenger.updateTitle(argvParsed.title);
     webMessenger.updateURL(argvParsed.url);
     webMessenger.updateQuote(argvParsed.quote);
+    webMessenger.afterUpdate(argvParsed);
 }
 
 function renderWindow(defaultUrl) {
