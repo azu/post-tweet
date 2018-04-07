@@ -20,6 +20,11 @@ class App extends React.Component {
             },
             appContext.ServiceStore.state
         );
+
+        appContext.ServiceStore.onChange(() => {
+            const newState = Object.assign({}, this.state, appContext.ServiceStore.state);
+            this.setState(newState);
+        });
     }
 
     componentDidMount() {
@@ -57,13 +62,6 @@ class App extends React.Component {
         if (this.editor) {
             this.editor.focus();
         }
-    }
-
-    componentWillMount() {
-        appContext.ServiceStore.onChange(() => {
-            let newState = Object.assign({}, this.state, appContext.ServiceStore.state);
-            this.setState(newState);
-        });
     }
 
     postLink() {

@@ -55,6 +55,7 @@ function renderWindow(defaultUrl) {
     }
     mainWindow = createMainWindow();
     webMessenger = new WebMessenger(mainWindow.webContents);
+    mainWindow.setAlwaysOnTop(true);
     mainWindow.webContents.once("did-finish-load", () => {
         if (defaultUrl) {
             updateFromProtocol(webMessenger, defaultUrl);
