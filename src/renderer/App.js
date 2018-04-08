@@ -34,6 +34,9 @@ class App extends React.Component {
             const state = this.state;
             if (title !== state.title || url !== state.URL) {
                 appContext.ServiceAction.resetField();
+                if (this.editor) {
+                    this.editor.reset();
+                }
                 isInitialized = true;
             }
         });
@@ -88,12 +91,7 @@ class App extends React.Component {
         const submitPostLink = this.postLink.bind(this);
         return (
             <div className="App">
-                <Editor
-                    ref={c => (this.editor = c)}
-                    value={this.state.comment}
-                    onSubmit={submitPostLink}
-                    onChange={updateComment}
-                />
+                <Editor ref={c => (this.editor = c)} onSubmit={submitPostLink} onChange={updateComment} />
                 <TweetLengthCounter
                     title={this.state.title}
                     url={this.state.URL}
