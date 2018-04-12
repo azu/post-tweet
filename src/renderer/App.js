@@ -82,7 +82,11 @@ class App extends React.Component {
             return;
         }
         const services = serviceManger.selectServices(["com.twitter"]);
-        ServiceAction.postLink(services, postData);
+        ServiceAction.postLink(services, postData).then(() => {
+            if (this.editor) {
+                this.editor.reset();
+            }
+        });
     }
 
     render() {
