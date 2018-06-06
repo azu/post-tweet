@@ -1,7 +1,8 @@
 // LICENSE : MIT
 "use strict";
 const React = require("react");
-const ReactCodeMirror = require("react-codemirror");
+import { Controlled as CodeMirror } from "react-codemirror2";
+
 export default class Editor extends React.Component {
     constructor(arg) {
         super(arg);
@@ -9,7 +10,8 @@ export default class Editor extends React.Component {
             value: ""
         };
 
-        this.onChange = value => {
+        this.onChange = (editor, data, value) => {
+            console.log(editor, data, value);
             this.props.onChange(value);
         };
     }
@@ -37,9 +39,15 @@ export default class Editor extends React.Component {
         };
         return (
             <div className="Editor">
-                <ReactCodeMirror
-                    ref={c => (this.editor = c)}
+                <CodeMirror
+                    editorDidMount={editor => {
+                        this.editor = editor;
+                    }}
+                    autoFocus={true}
                     value={this.state.value}
+                    onBeforeChange={(editor, data, value) => {
+                        this.setState({ value });
+                    }}
                     onChange={this.onChange}
                     options={options}
                 />
