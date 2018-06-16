@@ -97,8 +97,8 @@ class App extends React.Component {
             <div className="App">
                 <Editor ref={c => (this.editor = c)} onSubmit={submitPostLink} onChange={updateComment} />
                 <TweetLengthCounter
-                    title={this.state.title}
-                    url={this.state.URL}
+                    title={this.state.title || "No title"}
+                    url={this.state.URL || "No url"}
                     quote={this.state.quote}
                     comment={this.state.comment}
                 />

@@ -9,8 +9,8 @@ export default class ServiceStore extends Store {
         super(...args);
         const ServiceStorage = new Storage("ServiceStorage");
         this.state = {
-            title: "example",
-            URL: "http://example.com/",
+            title: undefined,
+            URL: undefined,
             viaURL: "",
             comment: "",
             quote: "",
