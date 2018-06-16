@@ -10,6 +10,9 @@ Post only twitter client application.
 
 ## Usage
 
+1. Open app
+2. Input description
+3. Post tweet by <kbd>Cmd+Shift+Enter</kbd> shortcut
 
 ## URL Schema
 
