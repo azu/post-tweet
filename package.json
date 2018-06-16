@@ -27,6 +27,7 @@
     "interop-require": "^1.0.0",
     "material-flux": "^1.4.0",
     "node-twitter-api": "^1.8.0",
+    "notie": "^4.3.1",
     "react": "^16.3.0",
     "react-codemirror": "^1.0.0",
     "react-codemirror2": "^4.2.1",

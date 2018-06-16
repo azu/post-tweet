@@ -1,5 +1,6 @@
 // LICENSE : MIT
 "use strict";
+import notie from "notie";
 import { ipcRenderer } from "electron";
 import React from "react";
 import { render } from "react-dom";
@@ -79,10 +80,12 @@ class App extends React.Component {
             relatedItems: this.state.relatedItems
         };
         if (!postData.title || !postData.url) {
+            notie.alert({ type: "error", text: "No data!", time: 2 });
             return;
         }
         const services = serviceManger.selectServices(["com.twitter"]);
         ServiceAction.postLink(services, postData).then(() => {
+            notie.alert({ type: "success", text: "Success!", time: 2 });
             if (this.editor) {
                 this.editor.reset();
             }
