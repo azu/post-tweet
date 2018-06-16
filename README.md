@@ -1,46 +1,41 @@
-# electron-webpack-quick-start
-> A bare minimum project structure to get started developing with [`electron-webpack`](https://github.com/electron-userland/electron-webpack).
+# post-tweet
 
-Thanks to the power of `electron-webpack` this template comes packed with...
+Post only twitter client application.
 
-* Use of [`webpack-dev-server`](https://github.com/webpack/webpack-dev-server) for development
-* HMR for both `renderer` and `main` processes
-* Use of [`babel-preset-env`](https://github.com/babel/babel-preset-env) that is automatically configured based on your `electron` version
-* Use of [`electron-builder`](https://github.com/electron-userland/electron-builder) to package and build a distributable electron application
+## Installation
 
-Make sure to check out [`electron-webpack`'s documentation](https://webpack.electron.build/) for more details.
+    yarn
+    yarn dist
+    # output binary
 
-## Getting Started
-Simply clone down this reposity, install dependencies, and get started on your application.
+## Usage
 
-The use of the [yarn](https://yarnpkg.com/) package manager is **strongly** recommended, as opposed to using `npm`.
 
-```bash
-# create a directory of your choice, and copy template using curl
-mkdir new-electron-webpack-project && cd new-electron-webpack-project
-curl -fsSL https://github.com/electron-userland/electron-webpack-quick-start/archive/master.tar.gz | tar -xz --strip-components 1
+## URL Schema
 
-# or copy template using git clone
-git clone https://github.com/electron-userland/electron-webpack-quick-start.git
-cd electron-webpack-quick-start
-rm -rf .git
+post-tweet support `post-tweet://` schema.
 
-# install dependencies
-yarn
+You can open the app from your browser.
+ `post-tweet://` schema support following parameter.
+
+- `url`: URL
+- `title`: Title
+- `quote`: Quoted text
+
+Example:
+
+```js
+const selectedText = window.getSelection().toString();
+location.href = `post-tweet://?url=${encodeURIComponent(window.top.location.href)}&title=${encodeURIComponent(window.top.document.title)}&quote=${encodeURIComponent(selectedText)}`
 ```
+## Contributing
 
-### Development Scripts
+1. Fork it!
+2. Create your feature branch: `git checkout -b my-new-feature`
+3. Commit your changes: `git commit -am 'Add some feature'`
+4. Push to the branch: `git push origin my-new-feature`
+5. Submit a pull request :D
 
-```bash
-# run application in development mode
-yarn dev
+## License
 
-# compile source code and create webpack output
-yarn compile
-
-# `yarn compile` & create build with electron-builder
-yarn dist
-
-# `yarn compile` & create unpacked build with electron-builder
-yarn dist:dir
-```
+MIT
