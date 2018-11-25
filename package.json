@@ -16,6 +16,9 @@
     "compile": "electron-webpack",
     "dist": "yarn compile && electron-builder",
     "dist:dir": "yarn dist --dir -c.compression=store -c.mac.identity=null",
+    "publish:patch": "yarn dist && npm version patch && dotenv electron-builder --win --mac --linux --x64 --ia32 --publish always",
+    "publish:minor": "yarn dist && npm version minor && dotenv electron-builder --win --mac --linux --x64 --ia32 --publish always",
+    "publish:major": "yarn dist && npm version major && dotenv electron-builder --win --mac --linux --x64 --ia32 --publish always",
     "prettier": "prettier --write \"**/*.{js,jsx,ts,tsx,css}\"",
     "precommit": "lint-staged",
     "postcommit": "git reset"
@@ -38,6 +41,7 @@
   },
   "devDependencies": {
     "babel-preset-react": "^6.24.1",
+    "dotenv-cli": "^1.4.0",
     "electron": "3.0.10",
     "electron-builder": "^20.36.2",
     "electron-webpack": "^2.6.1",
