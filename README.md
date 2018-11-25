@@ -15,12 +15,15 @@ post-tweet should be launched by [URL Schema](https://github.com/azu/post-tweet#
 ## Usage
 
 1. Open app
+    - Launch app and register URL Schema
 2. Input description
 3. Post tweet by <kbd>Cmd+Shift+Enter</kbd> shortcut
 
 ## URL Schema
 
 post-tweet support `post-tweet://` schema.
+
+:warning: You should launch the app before call URL Schema.
 
 You can open the app from your browser.
  `post-tweet://` schema support following parameter.
