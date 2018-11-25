@@ -4,6 +4,8 @@ Post only twitter client application.
 
 ![Image](docs/screenshot.png)
 
+post-tweet should be launched by [URL Schema](https://github.com/azu/post-tweet#url-schema).
+
 ## Installation
 
     yarn
