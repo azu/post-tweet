@@ -10,7 +10,14 @@
       ],
       "category": "your.app.category.type"
     },
-    "provider": "github"
+    "publish": [
+      {
+        "provider": "github",
+        "owner": "azu",
+        "repo": "post-tweet",
+        "releaseType": "release"
+      }
+    ]
   },
   "scripts": {
     "dev": "electron-webpack dev",
