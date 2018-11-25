@@ -9,16 +9,17 @@
         "zip"
       ],
       "category": "your.app.category.type"
-    }
+    },
+    "provider": "github"
   },
   "scripts": {
     "dev": "electron-webpack dev",
     "compile": "electron-webpack",
     "dist": "yarn compile && electron-builder",
     "dist:dir": "yarn dist --dir -c.compression=store -c.mac.identity=null",
-    "publish:patch": "yarn compile && npm version patch && dotenv electron-builder --win --mac --linux --x64 --ia32 --publish always",
-    "publish:minor": "yarn compile && npm version minor && dotenv electron-builder --win --mac --linux --x64 --ia32 --publish always",
-    "publish:major": "yarn compile && npm version major && dotenv electron-builder --win --mac --linux --x64 --ia32 --publish always",
+    "publish:patch": "yarn compile && npm version patch && git push --tags && dotenv electron-builder --win --mac --linux --x64 --ia32 --publish always",
+    "publish:minor": "yarn compile && npm version minor && git push --tags && dotenv electron-builder --win --mac --linux --x64 --ia32 --publish always",
+    "publish:major": "yarn compile && npm version major && git push --tags && dotenv electron-builder --win --mac --linux --x64 --ia32 --publish always",
     "prettier": "prettier --write \"**/*.{js,jsx,ts,tsx,css}\""
   },
   "dependencies": {
