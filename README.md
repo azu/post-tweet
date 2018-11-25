@@ -4,7 +4,7 @@ Post only twitter client application.
 
 ![Image](docs/screenshot.png)
 
-post-tweet should be launched by [URL Schema](https://github.com/azu/post-tweet#url-schema).
+post-tweet should be launched by [URL Scheme](https://github.com/azu/post-tweet#url-scheme).
 
 ## Installation
 
@@ -15,15 +15,15 @@ post-tweet should be launched by [URL Schema](https://github.com/azu/post-tweet#
 ## Usage
 
 1. Open app
-    - Launch app and register URL Schema
+    - Launch app and register URL Scheme
 2. Input description
 3. Post tweet by <kbd>Cmd+Shift+Enter</kbd> shortcut
 
-## URL Schema
+## URL Scheme
 
 post-tweet support `post-tweet://` schema.
 
-:warning: You should launch the app before call URL Schema.
+:warning: You should launch the app before call URL Scheme.
 
 You can open the app from your browser.
  `post-tweet://` schema support following parameter.
