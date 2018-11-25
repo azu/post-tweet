@@ -2,7 +2,7 @@
 
 Post only twitter client application.
 
-![Image](https://monosnap.com/direct/OAKnumtFP5XbzylsldRFjSjEDIMnrU)
+![Image](docs/screenshot.png)
 
 ## Installation
 
