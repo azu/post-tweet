@@ -8,6 +8,8 @@ post-tweet should be launched by [URL Scheme](https://github.com/azu/post-tweet#
 
 ## Installation
 
+You should create a binary on your env.
+
     yarn
     yarn dist
     # output binary
