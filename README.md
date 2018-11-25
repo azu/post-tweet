@@ -2,6 +2,8 @@
 
 Post only twitter client application.
 
+![Image](https://monosnap.com/direct/OAKnumtFP5XbzylsldRFjSjEDIMnrU)
+
 ## Installation
 
     yarn

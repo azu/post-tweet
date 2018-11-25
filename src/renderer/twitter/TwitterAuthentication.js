@@ -10,7 +10,7 @@ import NodeTwitterApi from "node-twitter-api";
 import storage from "../storage/accounts";
 
 const twitter = new NodeTwitterApi({
-    callback: "http://example.com",
+    callback: "https://github.com/azu/post-tweet",
     consumerKey: Consumer.key,
     consumerSecret: Consumer.secret
 });
