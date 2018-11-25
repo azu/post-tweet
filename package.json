@@ -19,9 +19,7 @@
     "publish:patch": "yarn dist && npm version patch && dotenv electron-builder --win --mac --linux --x64 --ia32 --publish always",
     "publish:minor": "yarn dist && npm version minor && dotenv electron-builder --win --mac --linux --x64 --ia32 --publish always",
     "publish:major": "yarn dist && npm version major && dotenv electron-builder --win --mac --linux --x64 --ia32 --publish always",
-    "prettier": "prettier --write \"**/*.{js,jsx,ts,tsx,css}\"",
-    "precommit": "lint-staged",
-    "postcommit": "git reset"
+    "prettier": "prettier --write \"**/*.{js,jsx,ts,tsx,css}\""
   },
   "dependencies": {
     "codemirror": "^5.42.0",
@@ -60,5 +58,11 @@
       "prettier --write",
       "git add"
     ]
+  },
+  "husky": {
+    "hooks": {
+      "post-commit": "git reset",
+      "pre-commit": "lint-staged"
+    }
   }
 }
