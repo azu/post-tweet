@@ -38,8 +38,10 @@ export default class TwitterClient {
         const { title, url, comment, tags, quote } = options;
         // make contents object
         const contents = { title, url, desc: comment, tags, quote: quote || "" };
+        const titleSymbol = title.length > 0 ? ` "%title%"` : `%title%`;
         const status = truncate(contents, {
-            template: `%desc% %quote% "%title%" %url% %tags%`
+            template: `%desc% %quote% ${titleSymbol} %url%`,
+            maxLength: 140
         });
         return new Promise((resolve, reject) => {
             this._getClient().post("statuses/update", { status: status }, function(error, tweet, response) {

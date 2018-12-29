@@ -71,19 +71,16 @@ class App extends React.Component {
     postLink() {
         const { ServiceAction } = appContext;
         const postData = {
-            title: this.state.title,
-            url: this.state.URL,
+            title: this.state.title || "",
+            url: this.state.URL || "",
             viaURL: this.state.viaURL.length > 0 ? this.state.viaURL : null,
-            quote: this.state.quote,
+            quote: this.state.quote || "",
             comment: this.state.comment || "見てる:",
             tags: this.state.selectedTags,
             relatedItems: this.state.relatedItems
         };
-        if (!postData.title || !postData.url) {
-            notie.alert({ type: "error", text: "No data!", time: 2 });
-            return;
-        }
         const services = serviceManger.selectServices(["com.twitter"]);
+        console.log("postData", postData);
         ServiceAction.postLink(services, postData).then(() => {
             notie.alert({ type: "success", text: "Success!", time: 2 });
             if (this.editor) {
@@ -100,10 +97,10 @@ class App extends React.Component {
             <div className="App">
                 <Editor ref={c => (this.editor = c)} onSubmit={submitPostLink} onChange={updateComment} />
                 <TweetLengthCounter
-                    title={this.state.title || "No title"}
-                    url={this.state.URL || "No url"}
-                    quote={this.state.quote}
-                    comment={this.state.comment}
+                    title={this.state.title || ""}
+                    url={this.state.URL || ""}
+                    quote={this.state.quote || ""}
+                    comment={this.state.comment || ""}
                 />
             </div>
         );
