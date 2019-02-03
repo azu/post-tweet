@@ -70,6 +70,13 @@ class App extends React.Component {
 
     postLink() {
         const { ServiceAction } = appContext;
+        const isFilledEitherOneState = state => {
+            return state.title || state.URL || state.quote || state.comment;
+        };
+        // Prevent to post empty content: https://github.com/azu/post-tweet/issues/1
+        if (!isFilledEitherOneState(this.state)) {
+            return;
+        }
         const postData = {
             title: this.state.title || "",
             url: this.state.URL || "",
