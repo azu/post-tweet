@@ -9,8 +9,7 @@ export default class TweetLengthCounter extends React.Component {
         const contents = { title, url, desc: comment, quote };
         const titleSymbol = title.length > 0 ? ` "%title%"` : `%title%`;
         const status = truncate(contents, {
-            template: `%desc% %quote% ${titleSymbol} %url%`,
-            maxLength: 140
+            template: `%desc% %quote% ${titleSymbol} %url%`
         });
         const style = {
             lineHeight: "1.2",
