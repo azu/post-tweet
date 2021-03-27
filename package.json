@@ -42,7 +42,7 @@
     "react-codemirror2": "^5.1.0",
     "react-dom": "^16.6.3",
     "source-map-support": "^0.5.9",
-    "tweet-truncator": "^1.0.4",
+    "tweet-truncator": "^2.0.0",
     "twitter": "^1.7.1"
   },
   "devDependencies": {
