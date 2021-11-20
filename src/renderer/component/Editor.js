@@ -40,7 +40,7 @@ export default class Editor extends React.Component {
         return (
             <div className="Editor">
                 <CodeMirror
-                    editorDidMount={editor => {
+                    editorDidMount={(editor) => {
                         this.editor = editor;
                     }}
                     autoFocus={true}

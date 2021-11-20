@@ -26,8 +26,8 @@ export default class ServiceManager {
     }
 
     selectServices(serviceIDs) {
-        return this.getServices().filter(service => {
-            return serviceIDs.some(serviceID => {
+        return this.getServices().filter((service) => {
+            return serviceIDs.some((serviceID) => {
                 return serviceID === service.id;
             });
         });

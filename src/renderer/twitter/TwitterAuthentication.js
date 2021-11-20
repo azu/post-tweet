@@ -3,8 +3,9 @@
 /*
     this module work on Main(Node.js) Context.
  */
-import { remote } from "electron";
-const BrowserWindow = remote.BrowserWindow;
+import { session } from "electron";
+
+const BrowserWindow = require("@electron/remote").BrowserWindow;
 import Consumer from "./TwitterConsumer";
 import NodeTwitterApi from "node-twitter-api";
 import storage from "../storage/accounts";
@@ -23,8 +24,11 @@ export const getCredential = function getCredential() {
 export const requireAccess = function requireAccess(callback) {
     twitter.getRequestToken((_error, reqToken, reqTokenSecret) => {
         const authUrl = twitter.getAuthUrl(reqToken);
-        const loginWindow = new BrowserWindow({ width: 800, height: 600, "node-integration": false });
-        loginWindow.webContents.on("will-navigate", (e, url) => {
+        const loginWindow = new BrowserWindow({ width: 800, height: 600 });
+        const filter = {
+            urls: ["*://*/*oauth_token"]
+        };
+        const handleURL = (url, preventDefault) => {
             const closeWindow = () => setTimeout(() => loginWindow.close(), 0);
             let matched;
             if ((matched = url.match(/\?oauth_token=([^&]*)&oauth_verifier=([^&]*)/))) {
@@ -38,15 +42,24 @@ export const requireAccess = function requireAccess(callback) {
                             accessSecret: accessTokenSecret
                         };
                         storage.set("twitter", credential);
+                        closeWindow();
                         if (callback) {
                             callback(null, credential);
                         }
                     }
                 );
+                if (preventDefault) {
+                    preventDefault();
+                }
             }
-            e.preventDefault();
-            closeWindow();
+        };
+        loginWindow.webContents.on("will-navigate", (event, url) => {
+            handleURL(url, () => event.preventDefault());
         });
         loginWindow.loadURL(authUrl);
+        session.defaultSession.webRequest.onCompleted(filter, (details) => {
+            const url = details.url;
+            handleURL(url);
+        });
     });
 };

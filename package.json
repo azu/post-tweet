@@ -27,9 +27,11 @@
     "publish:patch": "yarn compile && npm version patch && git push --tags && dotenv electron-builder --win --mac --linux --x64 --ia32 --publish always",
     "publish:minor": "yarn compile && npm version minor && git push --tags && dotenv electron-builder --win --mac --linux --x64 --ia32 --publish always",
     "publish:major": "yarn compile && npm version major && git push --tags && dotenv electron-builder --win --mac --linux --x64 --ia32 --publish always",
-    "prettier": "prettier --write \"**/*.{js,jsx,ts,tsx,css}\""
+    "format": "prettier --write \"**/*.{js,jsx,ts,tsx,css}\"",
+    "prepare": "git config --local core.hooksPath .githooks"
   },
   "dependencies": {
+    "@electron/remote": "^2.0.1",
     "codemirror": "^5.42.0",
     "electron-default-menu": "^1.0.1",
     "electron-positioner": "^4.1.0",
@@ -41,30 +43,29 @@
     "react": "^16.6.3",
     "react-codemirror2": "^5.1.0",
     "react-dom": "^16.6.3",
-    "source-map-support": "^0.5.9",
+    "source-map-support": "^0.5.21",
     "tweet-truncator": "^2.0.0",
     "twitter": "^1.7.1"
   },
   "devDependencies": {
     "babel-preset-react": "^6.24.1",
-    "dotenv-cli": "^1.4.0",
-    "electron": "3.0.10",
-    "electron-builder": "^20.36.2",
+    "dotenv-cli": "^4.1.0",
+    "electron": "16.0.1",
+    "electron-builder": "^22.14.5",
     "electron-webpack": "^2.6.1",
-    "husky": "^1.2.0",
-    "lint-staged": "^8.1.0",
-    "prettier": "^1.15.2",
+    "lint-staged": "^12.0.3",
+    "prettier": "^2.4.1",
     "webpack": "^4.26.0"
   },
   "prettier": {
     "singleQuote": false,
     "printWidth": 120,
-    "tabWidth": 4
+    "tabWidth": 4,
+    "trailingComma": "none"
   },
   "lint-staged": {
     "*.{js,jsx,ts,tsx,css}": [
-      "prettier --write",
-      "git add"
+      "prettier --write"
     ]
   },
   "husky": {

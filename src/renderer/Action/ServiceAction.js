@@ -15,10 +15,10 @@ export default class ServiceAction extends Action {
         console.log("fetchTags: " + service.id);
         return client
             .getTags()
-            .then(tags => {
+            .then((tags) => {
                 this.dispatch(keys.fetchTags, tags);
             })
-            .catch(error => {
+            .catch((error) => {
                 console.log(error);
             });
     }
@@ -33,7 +33,7 @@ export default class ServiceAction extends Action {
     }
 
     postLink(services, postData) {
-        var mapCS = services.map(service => {
+        var mapCS = services.map((service) => {
             const client = serviceInstance.getClient(service);
             return {
                 service,
@@ -49,7 +49,7 @@ export default class ServiceAction extends Action {
             .then(() => {
                 this.dispatch(keys.postLink);
             })
-            .catch(error => {
+            .catch((error) => {
                 console.log(error);
             });
     }
@@ -76,7 +76,7 @@ export default class ServiceAction extends Action {
 
     login(service) {
         const client = serviceInstance.getClient(service);
-        client.loginAsync(error => {
+        client.loginAsync((error) => {
             if (error) {
                 return console.error(error);
             }
@@ -92,7 +92,7 @@ export default class ServiceAction extends Action {
         if (client.isLogin()) {
             this.dispatch(keys.enableService, service);
         } else {
-            client.loginAsync(error => {
+            client.loginAsync((error) => {
                 if (error) {
                     return console.error(error);
                 }

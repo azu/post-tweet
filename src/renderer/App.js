@@ -56,7 +56,7 @@ class App extends React.Component {
             appContext.ServiceAction.updateURL(URL);
         });
         ipcRenderer.on("afterUpdate", (event, { title, url }) => {});
-        ipcRenderer.on("resetField", event => {
+        ipcRenderer.on("resetField", (event) => {
             appContext.ServiceAction.resetField();
         });
         // Enable twitter by default
@@ -70,7 +70,7 @@ class App extends React.Component {
 
     postLink() {
         const { ServiceAction } = appContext;
-        const isFilledEitherOneState = state => {
+        const isFilledEitherOneState = (state) => {
             return state.title || state.URL || state.quote || state.comment;
         };
         // Prevent to post empty content: https://github.com/azu/post-tweet/issues/1
@@ -102,7 +102,7 @@ class App extends React.Component {
         const submitPostLink = this.postLink.bind(this);
         return (
             <div className="App">
-                <Editor ref={c => (this.editor = c)} onSubmit={submitPostLink} onChange={updateComment} />
+                <Editor ref={(c) => (this.editor = c)} onSubmit={submitPostLink} onChange={updateComment} />
                 <TweetLengthCounter
                     title={this.state.title || ""}
                     url={this.state.URL || ""}

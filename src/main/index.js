@@ -9,6 +9,7 @@ import { WebMessenger } from "./WebMessenger";
 const defaultMenu = require("electron-default-menu");
 const isDevelopment = process.env.NODE_ENV !== "production";
 
+require("@electron/remote/main").initialize();
 // global reference to mainWindow (necessary to prevent window from being garbage collected)
 let mainWindow;
 /**
@@ -42,17 +43,14 @@ function updateFromProtocol(webMessenger, urlString) {
 
 function renderWindow(defaultUrl) {
     // Force Single Instance Application
-    const shouldQuit = app.makeSingleInstance((argv, workingDirectory) => {
-        if (mainWindow) {
-            if (mainWindow.isMinimized()) {
-                mainWindow.restore();
-            }
-            mainWindow.focus();
+
+    app.requestSingleInstanceLock();
+    app.on("second-instance", (event, argv, cwd) => {
+        if (mainWindow.isMinimized()) {
+            mainWindow.restore();
         }
+        mainWindow.focus();
     });
-    if (shouldQuit) {
-        app.quit();
-    }
     mainWindow = createMainWindow();
     webMessenger = new WebMessenger(mainWindow.webContents);
     mainWindow.setAlwaysOnTop(true);
@@ -72,7 +70,8 @@ function createMainWindow() {
         frame: false,
         width: dimensions.width - 80,
         height: 150,
-        transparent: true
+        transparent: true,
+        webPreferences: { nodeIntegration: true, contextIsolation: false }
     });
     const positioner = new Positioner(window);
     positioner.move("bottomCenter");
@@ -92,6 +91,7 @@ function createMainWindow() {
         mainWindow = null;
     });
 
+    require("@electron/remote/main").enable(window.webContents);
     window.webContents.on("devtools-opened", () => {
         window.focus();
         setImmediate(() => {
@@ -122,7 +122,7 @@ app.on("activate", () => {
     mainWindow.show();
 });
 
-app.on("open-url", function(event, url) {
+app.on("open-url", function (event, url) {
     event.preventDefault();
     if (!app.isReady()) {
         startupUrl = url;

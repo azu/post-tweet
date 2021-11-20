@@ -43,7 +43,7 @@ export default class TwitterClient {
             template: `%desc% %quote% ${titleSymbol} %url%`
         });
         return new Promise((resolve, reject) => {
-            this._getClient().post("statuses/update", { status: status }, function(error, tweet, response) {
+            this._getClient().post("statuses/update", { status: status }, function (error, tweet, response) {
                 if (error) {
                     console.error(error, response);
                     reject(error);
