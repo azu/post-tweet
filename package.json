@@ -1,6 +1,6 @@
 {
   "name": "post-tweet",
-  "version": "0.0.2",
+  "version": "1.0.0",
   "license": "MIT",
   "build": {
     "appId": "info.efcl.post-tweet",
