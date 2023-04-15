@@ -31,27 +31,26 @@
     "prepare": "git config --local core.hooksPath .githooks"
   },
   "dependencies": {
-    "@electron/remote": "^2.0.1",
+    "@electron/remote": "^2.0.9",
     "codemirror": "^5.42.0",
     "electron-default-menu": "^1.0.1",
     "electron-positioner": "^4.1.0",
     "fs-jetpack": "^2.2.0",
     "interop-require": "^1.0.0",
     "material-flux": "^1.4.0",
-    "node-twitter-api": "^1.8.0",
     "notie": "^4.3.1",
     "react": "^16.6.3",
     "react-codemirror2": "^5.1.0",
     "react-dom": "^16.6.3",
     "source-map-support": "^0.5.21",
     "tweet-truncator": "^2.0.0",
-    "twitter": "^1.7.1"
+    "twitter-api-v2": "^1.14.2"
   },
   "devDependencies": {
     "babel-preset-react": "^6.24.1",
     "dotenv-cli": "^4.1.0",
-    "electron": "16.0.1",
-    "electron-builder": "^22.14.5",
+    "electron": "24.1.2",
+    "electron-builder": "^23.6.0",
     "electron-webpack": "^2.6.1",
     "lint-staged": "^12.0.3",
     "prettier": "^2.4.1",

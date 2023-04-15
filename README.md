@@ -6,11 +6,17 @@ Post only twitter client application.
 
 post-tweet should be launched by [URL Scheme](https://github.com/azu/post-tweet#url-scheme).
 
+> **Warning**:
+> post-tweet require Node.js 16
+> Can not build on Node.js 18+
+
 ## Installation
 
 You should create a binary on your env.
 
     yarn
+    cp src/renderer/twitter/TwitterSecrets.example.js src/renderer/twitter/TwitterSecrets.js
+    # edit src/renderer/twitter/TwitterSecrets.js
     yarn dist
     # output binary
 

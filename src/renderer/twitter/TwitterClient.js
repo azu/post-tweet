@@ -1,26 +1,34 @@
 // LICENSE : MIT
 "use strict";
-import Consumer from "./TwitterConsumer";
-import Twitter from "twitter";
 import { truncate } from "tweet-truncator";
 
-const Authentication = require("./TwitterAuthentication");
+import TwitterSecrets from "./TwitterSecrets";
+import { TwitterApi } from "twitter-api-v2";
+
 export default class TwitterClient {
     isLogin() {
-        return Authentication.canAccess();
+        return Boolean(
+            TwitterSecrets.appKey &&
+                TwitterSecrets.appSecret &&
+                TwitterSecrets.accessToken &&
+                TwitterSecrets.accessSecret
+        );
     }
 
     loginAsync(callback) {
-        return Authentication.requireAccess(callback);
+        return callback(new Error(`You should create TwitterSecrets.js and fill your consumer key and secret.`));
     }
 
+    /**
+     * @returns {TwitterApi}
+     * @private
+     */
     _getClient() {
-        var credential = Authentication.getCredential();
-        return new Twitter({
-            consumer_key: Consumer.key,
-            consumer_secret: Consumer.secret,
-            access_token_key: credential.accessKey,
-            access_token_secret: credential.accessSecret
+        return new TwitterApi({
+            appKey: TwitterSecrets.appKey,
+            appSecret: TwitterSecrets.appSecret,
+            accessToken: TwitterSecrets.accessToken,
+            accessSecret: TwitterSecrets.accessSecret
         });
     }
 
@@ -38,19 +46,12 @@ export default class TwitterClient {
         const { title, url, comment, tags, quote } = options;
         // make contents object
         const contents = { title, url, desc: comment, tags, quote: quote || "" };
-        const titleSymbol = title.length > 0 ? ` "%title%"` : `%title%`;
         const status = truncate(contents, {
-            template: `%desc% %quote% ${titleSymbol} %url%`
+            template: `%desc% %quote% "%title%" %url% %tags%`
         });
-        return new Promise((resolve, reject) => {
-            this._getClient().post("statuses/update", { status: status }, function (error, tweet, response) {
-                if (error) {
-                    console.error(error, response);
-                    reject(error);
-                    return;
-                }
-                resolve();
-            });
+
+        return this._getClient().readWrite.v2.tweet(status, {
+            requestEventDebugHandler: (eventType, data) => console.log("Event", eventType, "with data", data)
         });
     }
 }
