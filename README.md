@@ -12,6 +12,7 @@ post-tweet should be launched by [URL Scheme](https://github.com/azu/post-tweet#
 - Post to Twitter
 - Post to Bluesky
 - Cross Posting
+- URL Scehema Support - Easy to integrate with Browser
 
 ## Installation
 
