@@ -5,7 +5,7 @@ import { ipcRenderer } from "electron";
 import React from "react";
 import { render } from "react-dom";
 import AppContext from "./AppContext";
-import serviceManger from "./service-instance";
+import serviceManger, { getEnabledServiceIdentifiers } from "./service-instance";
 import Editor from "./component/Editor";
 import TweetLengthCounter from "./component/TweetLengthCounter";
 import ServiceActionConst from "./Action/ServiceActionConst";
@@ -86,7 +86,8 @@ class App extends React.Component {
             tags: this.state.selectedTags,
             relatedItems: this.state.relatedItems
         };
-        const services = serviceManger.selectServices(["com.twitter"]);
+        const services = serviceManger.selectServices(getEnabledServiceIdentifiers());
+        console.log("services", services);
         console.log("postData", postData);
         ServiceAction.postLink(services, postData).then(() => {
             notie.alert({ type: "success", text: "Success!", time: 2 });
