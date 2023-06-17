@@ -1,6 +1,6 @@
 // LICENSE : MIT
 "use strict";
-const React = require("react");
+import React from "react";
 import { Controlled as CodeMirror } from "react-codemirror2";
 
 export default class Editor extends React.Component {

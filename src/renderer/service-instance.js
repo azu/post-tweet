@@ -1,8 +1,14 @@
-// LICENSE : MIT
-"use strict";
 // service
 import ServiceManger from "./service-manager";
+import ServiceDefinitions from "./service.js";
+
 const manager = new ServiceManger();
-import { Client, Model } from "./twitter/index.js";
-manager.addService(new Model(), new Client());
+ServiceDefinitions.forEach((definition) => {
+    if (!definition.enabled) {
+        return;
+    }
+    const { Model, Client } = require(definition.indexPath);
+    manager.addService(new Model(), new Client(definition.options));
+});
+
 export default manager;

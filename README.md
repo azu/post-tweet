@@ -15,10 +15,66 @@ post-tweet should be launched by [URL Scheme](https://github.com/azu/post-tweet#
 You should create a binary on your env.
 
     yarn
-    cp src/renderer/twitter/TwitterSecrets.example.js src/renderer/twitter/TwitterSecrets.js
-    # edit src/renderer/twitter/TwitterSecrets.js
+    cp src/renderer/service.example.js src/renderer/service.js
+    # edit src/renderer/service.js
     yarn dist
     # output binary
+
+## Configuration
+
+You need to edit `src/renderer/service.js` to enable services.
+
+### Twitter
+
+0. Visit https://developer.twitter.com/en/portal/dashboard
+1. Create App(development App) with read and write permission
+2. Generate Consumer Key and Secret
+3. Generate Access Token and Secret
+4. Fill the following options
+
+```json5
+{
+  enabled: true,
+  name: "twitter",
+  indexPath: path.join(__dirname, "services/twitter/index.js"),
+  options: {
+    // 0. Visit https://developer.twitter.com/en/portal/dashboard
+    // 1. Create App(development App) with read and write permission
+    // 2. Generate Consumer Key and Secret
+    // 3. Generate Access Token and Secret
+    // 4. Fill the following fields
+    // Consumer Keys
+    appKey: "app key",
+    appSecret: "app secret",
+    // Authentication Tokens(Access Token and Secret).
+    // Warning: Not Bearer Token
+    // Post Tweets that requires access token and secret
+    accessToken: "access token",
+    accessSecret: "access token secret"
+  }
+}
+```
+
+### Bluesky
+
+1. Visit https://bsky.app/settings/app-passwords
+2. Create new App Password
+3. Fill the following options
+
+```json5
+{
+  enabled: true,
+  name: "bluesky",
+  indexPath: path.join(__dirname, "services/bluesky/index.js"),
+  options: {
+    // 1. Visit https://bsky.app/settings/app-passwords
+    // 2. Create new App Password
+    // 3. Fill the following fields
+    username: "username.bsky.social",
+    appPassword: "password"
+  }
+}
+```
 
 ## Usage
 
