@@ -1,14 +1,17 @@
 # post-tweet
 
-Post only twitter client application.
+Post only twitter/bluesky client application.
 
 ![Image](docs/screenshot.png)
 
 post-tweet should be launched by [URL Scheme](https://github.com/azu/post-tweet#url-scheme).
 
-> **Warning**:
-> post-tweet require Node.js 16
-> Can not build on Node.js 18+
+## Feature
+
+- Simple Post UI
+- Post to Twitter
+- Post to Bluesky
+- Cross Posting
 
 ## Installation
 
