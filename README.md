@@ -106,6 +106,12 @@ Example:
 const selectedText = window.getSelection().toString();
 location.href = `post-tweet://?url=${encodeURIComponent(window.top.location.href)}&title=${encodeURIComponent(window.top.document.title)}&quote=${encodeURIComponent(selectedText)}`
 ```
+
+## Related
+
+- [Postem](https://github.com/azu/postem)
+  - [Postem](https://github.com/azu/postem) is similar concet, but it has more rich features
+
 ## Contributing
 
 1. Fork it!
