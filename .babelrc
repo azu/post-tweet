@@ -1,0 +1,13 @@
+{
+  "presets": [
+    [
+      "@babel/preset-env",
+      {
+        "targets": {
+          "electron": "24"
+        }
+      }
+    ],
+    "@babel/preset-react"
+  ]
+}

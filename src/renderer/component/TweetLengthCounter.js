@@ -1,6 +1,6 @@
 // MIT © 2017 azu
 "use strict";
-const React = require("react");
+import React from "react";
 import { truncate } from "tweet-truncator";
 
 export default class TweetLengthCounter extends React.Component {

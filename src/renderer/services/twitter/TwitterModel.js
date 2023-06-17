@@ -1,5 +1,3 @@
-// LICENSE : MIT
-"use strict";
 export default class TwitterModel {
     constructor() {
         this.id = "com.twitter";

@@ -1,7 +1,5 @@
 // LICENSE : MIT
 "use strict";
-import jetpack from "fs-jetpack";
-
 export default class Storage {
     constructor(storeName) {
         this.storeName = storeName;

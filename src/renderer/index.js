@@ -1,6 +1,6 @@
 // LICENSE : MIT
 "use strict";
-require("codemirror/lib/codemirror.css");
-require("./index.css");
-require("notie/dist/notie.min.css");
+if (process.env.NODE_ENV === "development" && process.env.BROWSER !== "1") {
+    require("@babel/register");
+}
 require("./App");

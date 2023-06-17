@@ -75,18 +75,10 @@ function createMainWindow() {
     });
     const positioner = new Positioner(window);
     positioner.move("bottomCenter");
-    if (isDevelopment) {
-        window.loadURL(`http://localhost:${process.env.ELECTRON_WEBPACK_WDS_PORT}`);
-    } else {
-        window.loadURL(
-            formatUrl({
-                pathname: path.join(__dirname, "index.html"),
-                protocol: "file",
-                slashes: true
-            })
-        );
-    }
-
+    const index = {
+        html: path.join(__dirname, "..", "renderer", "index.html")
+    };
+    window.loadURL("file://" + index.html);
     window.on("closed", () => {
         mainWindow = null;
     });

@@ -6,17 +6,40 @@ import TwitterSecrets from "./TwitterSecrets";
 import { TwitterApi } from "twitter-api-v2";
 
 export default class TwitterClient {
-    isLogin() {
+    constructor(serviceOptions) {
+        this.serviceOptions = serviceOptions;
+    }
+
+    get _hasServiceOptions() {
         return Boolean(
-            TwitterSecrets.appKey &&
-                TwitterSecrets.appSecret &&
-                TwitterSecrets.accessToken &&
-                TwitterSecrets.accessSecret
+            this.serviceOptions &&
+                this.serviceOptions.appKey &&
+                this.serviceOptions.appSecret &&
+                this.serviceOptions.accessToken &&
+                this.serviceOptions.accessSecret
         );
     }
 
+    isLogin() {
+        return this._hasServiceOptions;
+    }
+
     loginAsync(callback) {
-        return callback(new Error(`You should create TwitterSecrets.js and fill your consumer key and secret.`));
+        callback(
+            new Error(`Please set Twitter App Key and Secret to options
+    {
+        enabled: true,
+        name: "twitter",
+        indexPath: path.join(__dirname, "services/twitter/index.js"),
+        options: {
+            appKey: "app key",
+            appSecret: "app secret",
+            accessToken: "access token ",
+            accessSecret: "access token secret"
+        }
+    }
+`)
+        );
     }
 
     /**
@@ -25,10 +48,10 @@ export default class TwitterClient {
      */
     _getClient() {
         return new TwitterApi({
-            appKey: TwitterSecrets.appKey,
-            appSecret: TwitterSecrets.appSecret,
-            accessToken: TwitterSecrets.accessToken,
-            accessSecret: TwitterSecrets.accessSecret
+            appKey: this.serviceOptions.appKey,
+            appSecret: this.serviceOptions.appSecret,
+            accessToken: this.serviceOptions.accessToken,
+            accessSecret: this.serviceOptions.accessSecret
         });
     }
 

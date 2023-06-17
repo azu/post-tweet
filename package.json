@@ -2,6 +2,7 @@
   "name": "post-tweet",
   "version": "1.0.0",
   "license": "MIT",
+  "main": "index.js",
   "build": {
     "appId": "info.efcl.post-tweet",
     "mac": {
@@ -20,17 +21,18 @@
     ]
   },
   "scripts": {
-    "dev": "electron-webpack dev",
-    "compile": "electron-webpack",
-    "dist": "yarn compile && electron-builder",
+    "dev": "NODE_ENV=development electron .",
+    "build": "babel src --out-dir lib --extensions \".ts,.tsx,.js,.jsx\" --source-maps inline --copy-files",
+    "dist": "npm run build && electron-builder",
     "dist:dir": "yarn dist --dir -c.compression=store -c.mac.identity=null",
-    "publish:patch": "yarn compile && npm version patch && git push --tags && dotenv electron-builder --win --mac --linux --x64 --ia32 --publish always",
-    "publish:minor": "yarn compile && npm version minor && git push --tags && dotenv electron-builder --win --mac --linux --x64 --ia32 --publish always",
-    "publish:major": "yarn compile && npm version major && git push --tags && dotenv electron-builder --win --mac --linux --x64 --ia32 --publish always",
+    "publish:patch": "yarn compile && npm version patch && git push --tags && NODE_OPTIONS=--openssl-legacy-provider dotenv electron-builder --win --mac --linux --x64 --ia32 --publish always",
+    "publish:minor": "yarn compile && npm version minor && git push --tags && NODE_OPTIONS=--openssl-legacy-provider dotenv electron-builder --win --mac --linux --x64 --ia32 --publish always",
+    "publish:major": "yarn compile && npm version major && git push --tags && NODE_OPTIONS=--openssl-legacy-provider dotenv electron-builder --win --mac --linux --x64 --ia32 --publish always",
     "format": "prettier --write \"**/*.{js,jsx,ts,tsx,css}\"",
     "prepare": "git config --local core.hooksPath .githooks"
   },
   "dependencies": {
+    "@atproto/api": "^0.3.12",
     "@electron/remote": "^2.0.9",
     "codemirror": "^5.42.0",
     "electron-default-menu": "^1.0.1",
@@ -47,14 +49,17 @@
     "twitter-api-v2": "^1.14.2"
   },
   "devDependencies": {
+    "@babel/cli": "^7.22.5",
+    "@babel/core": "^7.22.5",
+    "@babel/preset-env": "^7.22.5",
+    "@babel/preset-react": "^7.22.5",
+    "@babel/register": "^7.22.5",
     "babel-preset-react": "^6.24.1",
     "dotenv-cli": "^4.1.0",
-    "electron": "24.1.2",
-    "electron-builder": "^23.6.0",
-    "electron-webpack": "^2.6.1",
+    "electron": "^25.1.1",
+    "electron-builder": "^24.4.0",
     "lint-staged": "^12.0.3",
-    "prettier": "^2.4.1",
-    "webpack": "^4.26.0"
+    "prettier": "^2.8.8"
   },
   "prettier": {
     "singleQuote": false,
