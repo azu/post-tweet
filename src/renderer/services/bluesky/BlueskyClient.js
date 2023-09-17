@@ -3,6 +3,29 @@
 import { BskyAgent, RichText } from "@atproto/api";
 import { truncate } from "tweet-truncator";
 
+const agent = new BskyAgent({
+    service: "https://bsky.social"
+});
+const useBskyAgent = async ({ identifier, appPassword }) => {
+    if (agent.hasSession) {
+        // try resume session
+        try {
+            await agent.resumeSession(agent.session);
+        } catch (error) {
+            // if error, login again
+            await agent.login({
+                identifier,
+                password: appPassword
+            });
+        }
+    } else {
+        await agent.login({
+            identifier: identifier,
+            password: appPassword
+        });
+    }
+    return agent;
+};
 export default class BlueskyClient {
     /**
      * @param {{ identifier:string; appPassword:string; }} serviceOptions
@@ -53,12 +76,9 @@ export default class BlueskyClient {
             template: `%desc% %quote% "%title%" %url% %tags%`,
             maxLength: 500
         });
-        const agent = new BskyAgent({
-            service: "https://bsky.social"
-        });
-        await agent.login({
+        const agent = await useBskyAgent({
             identifier: this.serviceOptions.identifier,
-            password: this.serviceOptions.appPassword
+            appPassword: this.serviceOptions.appPassword
         });
         const rt = new RichText({ text: status });
         await rt.detectFacets(agent); // automatically detects mentions and links
