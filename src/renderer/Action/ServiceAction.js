@@ -33,15 +33,15 @@ export default class ServiceAction extends Action {
     }
 
     postLink(services, postData) {
-        var mapCS = services.map((service) => {
+        const mapCS = services.map((service) => {
             const client = serviceInstance.getClient(service);
             return {
                 service,
                 client
             };
         });
-        var enabledCS = mapCS.filter(({ client }) => client.isLogin());
-        var servicePromises = enabledCS.map(({ service, client }) => {
+        const enabledCS = mapCS.filter(({ client }) => client.isLogin());
+        const servicePromises = enabledCS.map(({ service, client }) => {
             console.log("postLink: " + service.id);
             return client.postLink(postData);
         });
@@ -50,7 +50,7 @@ export default class ServiceAction extends Action {
                 this.dispatch(keys.postLink);
             })
             .catch((error) => {
-                console.log(error);
+                console.error(error);
             });
     }
 

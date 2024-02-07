@@ -12,6 +12,17 @@ import ServiceActionConst from "./Action/ServiceActionConst";
 
 const appContext = new AppContext();
 
+const LRU_MAX_SIZE = 10;
+class LRUPostSet extends Set {
+    add(value) {
+        if (this.size >= LRU_MAX_SIZE) {
+            const firstValue = this.values().next().value;
+            this.delete(firstValue);
+        }
+        super.add(value);
+    }
+}
+const lruPostSet = new LRUPostSet();
 class App extends React.Component {
     constructor() {
         super();
@@ -86,6 +97,12 @@ class App extends React.Component {
             tags: this.state.selectedTags,
             relatedItems: this.state.relatedItems
         };
+        const hash = JSON.stringify(postData);
+        if (lruPostSet.has(hash)) {
+            notie.alert({ type: "info", text: "Already posted", time: 2 });
+            return;
+        }
+        lruPostSet.add(hash);
         const services = serviceManger.selectServices(getEnabledServiceIdentifiers());
         console.log("services", services);
         console.log("postData", postData);
