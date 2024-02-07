@@ -12,7 +12,7 @@ import ServiceActionConst from "./Action/ServiceActionConst";
 
 const appContext = new AppContext();
 
-const LRU_MAX_SIZE = 10;
+const LRU_MAX_SIZE = 30;
 class LRUPostSet extends Set {
     add(value) {
         if (this.size >= LRU_MAX_SIZE) {
