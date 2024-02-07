@@ -102,7 +102,6 @@ class App extends React.Component {
             notie.alert({ type: "info", text: "Already posted", time: 2 });
             return;
         }
-        lruPostSet.add(hash);
         const services = serviceManger.selectServices(getEnabledServiceIdentifiers());
         console.log("services", services);
         console.log("postData", postData);
@@ -111,6 +110,7 @@ class App extends React.Component {
             if (this.editor) {
                 this.editor.reset();
             }
+            lruPostSet.add(hash);
         });
     }
 
