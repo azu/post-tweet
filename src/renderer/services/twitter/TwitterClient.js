@@ -2,7 +2,6 @@
 "use strict";
 import { truncate } from "tweet-truncator";
 
-import TwitterSecrets from "./TwitterSecrets";
 import { TwitterApi } from "twitter-api-v2";
 
 export default class TwitterClient {
