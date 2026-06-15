@@ -28,34 +28,16 @@ You should create a binary on your env.
 
 You need to edit `src/renderer/service.js` to enable services.
 
-### Twitter
+### Twitter (X)
 
-0. Visit https://developer.twitter.com/en/portal/dashboard
-1. Create App(development App) with read and write permission
-2. Generate Consumer Key and Secret
-3. Generate Access Token and Secret
-4. Fill the following options
+X (Twitter) does not require API credentials. It opens the X Web Intent in your default browser, using your existing browser login session.
 
 ```json5
 {
   enabled: true,
   name: "twitter",
   indexPath: path.join(__dirname, "services/twitter/index.js"),
-  options: {
-    // 0. Visit https://developer.twitter.com/en/portal/dashboard
-    // 1. Create App(development App) with read and write permission
-    // 2. Generate Consumer Key and Secret
-    // 3. Generate Access Token and Secret
-    // 4. Fill the following fields
-    // Consumer Keys
-    appKey: "app key",
-    appSecret: "app secret",
-    // Authentication Tokens(Access Token and Secret).
-    // Warning: Not Bearer Token
-    // Post Tweets that requires access token and secret
-    accessToken: "access token",
-    accessSecret: "access token secret"
-  }
+  options: {}
 }
 ```
 

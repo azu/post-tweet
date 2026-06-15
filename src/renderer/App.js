@@ -79,7 +79,7 @@ class App extends React.Component {
         }
     }
 
-    postLink() {
+    postLink({ openTwitterIntent = false } = {}) {
         const { ServiceAction } = appContext;
         const isFilledEitherOneState = (state) => {
             return state.title || state.URL || state.quote || state.comment;
@@ -105,7 +105,7 @@ class App extends React.Component {
         const services = serviceManger.selectServices(getEnabledServiceIdentifiers());
         console.log("services", services);
         console.log("postData", postData);
-        ServiceAction.postLink(services, postData).then(() => {
+        ServiceAction.postLink(services, postData, { openTwitterIntent }).then(() => {
             notie.alert({ type: "success", text: "Success!", time: 2 });
             if (this.editor) {
                 this.editor.reset();
@@ -117,7 +117,7 @@ class App extends React.Component {
     render() {
         const { ServiceAction } = appContext;
         const updateComment = ServiceAction.updateComment.bind(ServiceAction);
-        const submitPostLink = this.postLink.bind(this);
+        const submitPostLink = (options) => this.postLink(options);
         return (
             <div className="App">
                 <Editor ref={(c) => (this.editor = c)} onSubmit={submitPostLink} onChange={updateComment} />

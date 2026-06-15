@@ -25,6 +25,7 @@
     "build": "babel src --out-dir lib --extensions \".ts,.tsx,.js,.jsx\" --source-maps inline --copy-files",
     "dist": "npm run build && electron-builder",
     "dist:dir": "pnpm dist --dir -c.compression=store -c.mac.identity=null",
+    "dist:install": "npm run dist && cp -R dist/mac-arm64/post-tweet.app /Applications/",
     "publish:patch": "pnpm compile && npm version patch && git push --tags && NODE_OPTIONS=--openssl-legacy-provider dotenv electron-builder --win --mac --linux --x64 --ia32 --publish always",
     "publish:minor": "pnpm compile && npm version minor && git push --tags && NODE_OPTIONS=--openssl-legacy-provider dotenv electron-builder --win --mac --linux --x64 --ia32 --publish always",
     "publish:major": "pnpm compile && npm version major && git push --tags && NODE_OPTIONS=--openssl-legacy-provider dotenv electron-builder --win --mac --linux --x64 --ia32 --publish always",
@@ -45,8 +46,7 @@
     "react-codemirror2": "^5.1.0",
     "react-dom": "^16.6.3",
     "source-map-support": "^0.5.21",
-    "tweet-truncator": "^3.0.2",
-    "twitter-api-v2": "^1.24.0"
+    "tweet-truncator": "^3.0.2"
   },
   "devDependencies": {
     "@babel/cli": "^7.22.5",

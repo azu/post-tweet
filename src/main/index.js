@@ -136,7 +136,9 @@ app.on("ready", () => {
 });
 
 ipcMain.on("hide-window", () => {
-    if (mainWindow) {
+    if (process.platform === "darwin") {
+        app.hide();
+    } else if (mainWindow) {
         mainWindow.hide();
     }
 });

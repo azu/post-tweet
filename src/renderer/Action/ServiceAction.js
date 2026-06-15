@@ -32,7 +32,7 @@ export default class ServiceAction extends Action {
         return client.getContent(url);
     }
 
-    postLink(services, postData) {
+    postLink(services, postData, { openTwitterIntent = false } = {}) {
         const mapCS = services.map((service) => {
             const client = serviceInstance.getClient(service);
             return {
@@ -41,11 +41,24 @@ export default class ServiceAction extends Action {
             };
         });
         const enabledCS = mapCS.filter(({ client }) => client.isLogin());
-        const servicePromises = enabledCS.map(({ service, client }) => {
+        // Twitter は Web Intent でブラウザを開くため、API投稿系（bsky等）の完了後に実行する
+        const apiCS = enabledCS.filter(({ service }) => service.id !== "com.twitter");
+        const intentCS = openTwitterIntent
+            ? enabledCS.filter(({ service }) => service.id === "com.twitter")
+            : [];
+        const apiPromises = apiCS.map(({ service, client }) => {
             console.log("postLink: " + service.id);
             return client.postLink(postData);
         });
-        return Promise.all(servicePromises)
+        return Promise.all(apiPromises)
+            .then(() =>
+                Promise.all(
+                    intentCS.map(({ service, client }) => {
+                        console.log("postLink: " + service.id);
+                        return client.postLink(postData);
+                    })
+                )
+            )
             .then(() => {
                 this.dispatch(keys.postLink);
             })

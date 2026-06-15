@@ -1,82 +1,28 @@
 // LICENSE : MIT
 "use strict";
+import { shell } from "electron";
 import { truncate } from "tweet-truncator";
-
-import { TwitterApi } from "twitter-api-v2";
 
 export default class TwitterClient {
     constructor(serviceOptions) {
-        this.serviceOptions = serviceOptions;
-    }
-
-    get _hasServiceOptions() {
-        return Boolean(
-            this.serviceOptions &&
-                this.serviceOptions.appKey &&
-                this.serviceOptions.appSecret &&
-                this.serviceOptions.accessToken &&
-                this.serviceOptions.accessSecret
-        );
+        this.serviceOptions = serviceOptions || {};
     }
 
     isLogin() {
-        return this._hasServiceOptions;
+        return true;
     }
 
     loginAsync(callback) {
-        callback(
-            new Error(`Please set Twitter App Key and Secret to options
-    {
-        enabled: true,
-        name: "twitter",
-        indexPath: path.join(__dirname, "services/twitter/index.js"),
-        options: {
-            appKey: "app key",
-            appSecret: "app secret",
-            accessToken: "access token ",
-            accessSecret: "access token secret"
-        }
-    }
-`)
-        );
+        callback();
     }
 
-    /**
-     * @returns {TwitterApi}
-     * @private
-     */
-    _getClient() {
-        return new TwitterApi({
-            appKey: this.serviceOptions.appKey,
-            appSecret: this.serviceOptions.appSecret,
-            accessToken: this.serviceOptions.accessToken,
-            accessSecret: this.serviceOptions.accessSecret
-        });
-    }
-
-    /**
-     *
-     * @param options
-     * @returns {*}
-     * {
-            url,
-            comment,
-            tags = []
-        }
-     */
     postLink(options = {}) {
         const { title, url, comment, tags, quote } = options;
-        // make contents object
         const contents = { title, url, desc: comment, tags, quote: quote || "" };
         const status = truncate(contents, {
             template: `%desc% %quote% "%title%" %url% %tags%`
         });
-
-        const tweetOptions = {
-            requestEventDebugHandler: (eventType, data) => console.log("Event", eventType, "with data", data),
-            ...(this.serviceOptions.reply_settings ? { reply_settings: this.serviceOptions.reply_settings } : {})
-        };
-
-        return this._getClient().readWrite.v2.tweet(status, tweetOptions);
+        const intentUrl = `https://x.com/intent/tweet?text=${encodeURIComponent(status)}`;
+        return shell.openExternal(intentUrl);
     }
 }

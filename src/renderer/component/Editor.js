@@ -31,7 +31,10 @@ export default class Editor extends React.Component {
     render() {
         const extraKeys = {
             "Cmd-Enter": () => {
-                this.props.onSubmit();
+                this.props.onSubmit({ openTwitterIntent: false });
+            },
+            "Shift-Cmd-Enter": () => {
+                this.props.onSubmit({ openTwitterIntent: true });
             }
         };
         const options = {
